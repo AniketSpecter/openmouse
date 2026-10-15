@@ -35,6 +35,7 @@ function resolveDeviceImageFilename(_device: HIDDevice | null | undefined, displ
   return resolved;
 }
 
+/** Resolve a reported product name to its artwork filename, falling back to the placeholder. */
 function computeDeviceImageFilename(displayName: string): string {
   if (/^Redgear X13 Pro$/i.test(displayName)) return "redgear-x13-pro.png";
   // Lightspeed receivers are shared product IDs, so paired G502 X variants

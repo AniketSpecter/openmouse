@@ -2585,6 +2585,7 @@ function applyStatus(deviceStatus: MouseStatus, statusKey?: string): void {
   batch(() => applyStatusInner(deviceStatus, statusKey));
 }
 
+/** Update device telemetry and UI while preserving staged-change status messages. */
 function applyStatusInner(deviceStatus: MouseStatus, statusKey?: string): void {
   if (isNativeAttackSharkX11(deviceStatus)) {
     // The firmware has no read-back command for polling rate, so show the
@@ -2632,7 +2633,10 @@ function applyStatusInner(deviceStatus: MouseStatus, statusKey?: string): void {
   } else if (!hasPendingChanges()) {
     readStatus = st("ctl.currentLine", { dpi: deviceStatus.dpi.toLocaleString(), hz: pollingRateText(deviceStatus.pollingRateHz) });
   }
-  if (status.ui?.statusNote) readStatus += ` · ${status.ui.statusNote}`;
+  const statusNote = status.ui?.statusNote;
+  if (statusNote && !readStatus.endsWith(` · ${statusNote}`)) {
+    readStatus += ` · ${statusNote}`;
+  }
 
   if (!customDpiEditing) customDpiText = `${status.dpi.toLocaleString()} DPI`;
 
