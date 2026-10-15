@@ -36,6 +36,7 @@ function resolveDeviceImageFilename(_device: HIDDevice | null | undefined, displ
 }
 
 function computeDeviceImageFilename(displayName: string): string {
+  if (/^Redgear X13 Pro$/i.test(displayName)) return "redgear-x13-pro.png";
   // Lightspeed receivers are shared product IDs, so paired G502 X variants
   // must use the friendly name read from the mouse itself.
   if (/g502\s*x\s*plus/i.test(displayName)) return "logitech-g502-x-plus.png";
@@ -223,6 +224,7 @@ const DEVICE_IMAGE_BASE_URL = "https://img.openmouse.app/";
  * README note.
  */
 const LOCAL_OVERRIDES: Readonly<Record<string, string>> = {
+  "redgear-x13-pro.png": "/devices/redgear-x13-pro.png",
   "attackshark-r2.png": "/devices/attackshark-r2.png",
   "delux-m800-mini.png": "/devices/delux-m800-mini.png",
   "ipi-float-88.png": "/devices/ipi-float-88.png",
